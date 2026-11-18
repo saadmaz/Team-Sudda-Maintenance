@@ -1,0 +1,13 @@
+{
+  "printWidth": 100,
+  "semi": true,
+  "singleQuote": false,
+  "trailingComma": "all",
+  "overrides": [
+    {
+      "comment": "wrangler.jsonc is read by wrangler, not by a JS engine. Comments are supported there, but trailing commas are not guaranteed to be, and a parse error means a failed deploy — so don't let the repo-wide trailingComma setting add them.",
+      "files": "*.jsonc",
+      "options": { "trailingComma": "none" }
+    }
+  ]
+}

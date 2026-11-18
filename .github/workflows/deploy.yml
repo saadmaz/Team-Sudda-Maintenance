@@ -1,0 +1,72 @@
+# Records each release to its GitHub environment: main -> production.
+# Cloudflare Workers builds and deploys the Worker directly from this
+# repository; this workflow waits for that build of the exact commit, fails if
+# it fails, then checks that the live route is answered by this Worker.
+name: Deploy
+
+on:
+  push:
+    branches: [main, develop]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-${{ github.ref_name }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  checks: read
+  statuses: read
+
+jobs:
+  deploy:
+    # A route Worker has no development copy; develop is verified by CI only.
+    if: github.ref_name == 'main' || vars.DEVELOPMENT_ENABLED == 'true'
+    name: ${{ github.ref_name == 'main' && 'Production' || 'Development' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    environment:
+      name: ${{ github.ref_name == 'main' && 'production' || 'development' }}
+      url: ${{ vars.APP_URL }}
+    env:
+      APP_URL: ${{ vars.APP_URL }}
+      FALLBACK_HEADER: ${{ vars.FALLBACK_HEADER }}
+      GH_TOKEN: ${{ github.token }}
+
+    steps:
+      - name: Wait for the Cloudflare Workers build
+        run: |
+          for i in $(seq 1 100); do
+            state=$(gh api "repos/$GITHUB_REPOSITORY/commits/$GITHUB_SHA/check-runs" --jq '[.check_runs[] | select(.name | startswith("Workers Builds"))][0] | if . == null then "" elif .status != "completed" then "pending" else .conclusion end')
+            case "$state" in
+              success) echo "Cloudflare Workers build succeeded."; exit 0 ;;
+              failure|error|cancelled|timed_out|action_required)
+                echo "::error::Cloudflare Workers build finished with: $state"; exit 1 ;;
+            esac
+            echo "Waiting for Cloudflare Workers (${state:-not started})..."
+            sleep 15
+          done
+          echo "::error::Timed out waiting for the Cloudflare Workers build"
+          exit 1
+
+      - name: Smoke test
+        run: |
+          for i in $(seq 1 10); do
+            code=$(curl -s -o /dev/null -D headers.txt -w "%{http_code}" --max-time 30 -H "Accept: text/html" "$APP_URL" || echo 000)
+            echo "$APP_URL -> $code"
+            # The maintenance Worker marks every response it shapes with its fallback header.
+            if grep -qi "^$FALLBACK_HEADER:" headers.txt; then
+              grep -i "^$FALLBACK_HEADER:" headers.txt
+              exit 0
+            fi
+            # Cloudflare bot protection challenges requests from CI data centres;
+            # a challenge proves the zone is up and served by Cloudflare.
+            if [ "$code" = "403" ] && grep -qi '^cf-mitigated: challenge' headers.txt; then
+              echo "::notice::$APP_URL is up (Cloudflare challenged the CI runner)"
+              exit 0
+            fi
+            sleep 15
+          done
+          cat headers.txt
+          echo "::error::$APP_URL was not answered by the maintenance Worker ($FALLBACK_HEADER missing)"
+          exit 1

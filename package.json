@@ -1,1 +1,20 @@
-{"type":"module","private":true}
+{
+  "name": "team-sudda-maintenance",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Branded maintenance fallback for teamsudda.lk, as a Cloudflare Worker.",
+  "packageManager": "bun@1.4.4",
+  "scripts": {
+    "dev": "wrangler dev",
+    "test": "node test/index.test.mjs",
+    "check": "wrangler deploy --dry-run --outdir dist",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "prettier": "^3.7.3",
+    "wrangler": "^4.162.0"
+  }
+}
