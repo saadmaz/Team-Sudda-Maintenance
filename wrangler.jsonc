@@ -1,0 +1,19 @@
+{
+  "$schema": "../Team-Sudda-Website/node_modules/wrangler/config-schema.json",
+  "name": "team-sudda-maintenance",
+  "main": "src/index.js",
+  "compatibility_date": "2026-10-01",
+  "workers_dev": true,
+  "preview_urls": false,
+  // Catches proxied (orange cloud) hostnames on teamsudda.lk. DNS-only (grey cloud) records bypass
+  // Cloudflare entirely and never reach this Worker. See src/index.js for how each host is handled.
+  "routes": [
+    { "pattern": "*.teamsudda.lk/*", "zone_name": "teamsudda.lk" }
+  ],
+  // Canonical hosts that are custom domains of another Worker, so the route can hand them straight over.
+  "services": [
+    { "binding": "SITE", "service": "team-sudda-website" },
+    { "binding": "SITE_DEV", "service": "team-sudda-website-dev" }
+  ],
+  "observability": { "enabled": true }
+}
