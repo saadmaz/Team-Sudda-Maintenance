@@ -1,0 +1,35 @@
+name: Change request
+description: Suggest a new feature, page, content update or design change.
+title: "feat: "
+labels: [enhancement]
+body:
+  - type: dropdown
+    id: type
+    attributes:
+      label: Type of change
+      options:
+        - New feature
+        - Content or copy update
+        - Design or visual change
+        - SEO or performance
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does this solve?
+      description: Who is it for, and why does it matter?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed change
+      description: Describe what should change. Include copy, links or mockups if you have them.
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Additional context

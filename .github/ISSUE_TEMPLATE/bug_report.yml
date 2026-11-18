@@ -1,0 +1,61 @@
+name: Bug report
+description: Something is broken or behaves unexpectedly.
+title: "fix: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting. For security problems, do not use this form. See SECURITY.md instead.
+  - type: input
+    id: where
+    attributes:
+      label: URL
+      description: Where did it happen?
+      placeholder: https://example.teamsudda.lk/
+    validations:
+      required: true
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Describe the problem. Screenshots or error messages help.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Go to ...
+        2. Tap ...
+        3. See ...
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Impact
+      options:
+        - Blocking (cannot complete a task)
+        - Major (workaround exists)
+        - Minor (cosmetic or rare)
+    validations:
+      required: true
+  - type: dropdown
+    id: device
+    attributes:
+      label: Device
+      options:
+        - Phone
+        - Tablet
+        - Desktop or laptop
+  - type: input
+    id: browser
+    attributes:
+      label: Browser and version
+      placeholder: Chrome 142 on Android

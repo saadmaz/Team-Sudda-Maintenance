@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="320" viewBox="0 0 1280 320" role="img" aria-label="Team Sudda: Professional cleaning services for homes and workplaces.">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#05112e"/>
+      <stop offset="1" stop-color="#0a1d43"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.82" cy="0.35" r="0.55">
+      <stop offset="0" stop-color="#ffd000" stop-opacity="0.28"/>
+      <stop offset="1" stop-color="#ffd000" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="dots" width="22" height="22" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.2" fill="#ffffff" fill-opacity="0.07"/>
+    </pattern>
+    <clipPath id="frame"><rect width="1280" height="320" rx="24"/></clipPath>
+  </defs>
+  <g clip-path="url(#frame)">
+    <rect width="1280" height="320" fill="url(#bg)"/>
+    <rect width="1280" height="320" fill="url(#dots)"/>
+    <rect width="1280" height="320" fill="url(#glow)"/>
+    <g fill="none" stroke="#ffd000">
+      <circle cx="1080" cy="120" r="70" stroke-opacity="0.55" stroke-width="2"/>
+      <circle cx="1080" cy="120" r="130" stroke-opacity="0.30" stroke-width="2"/>
+      <circle cx="1080" cy="120" r="200" stroke-opacity="0.16" stroke-width="2"/>
+      <circle cx="1080" cy="120" r="275" stroke-opacity="0.08" stroke-width="2"/>
+    </g>
+    <rect x="72" y="74" width="40" height="4" rx="2" fill="#ffd000"/>
+    <text x="124" y="81" font-family="'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" font-weight="700" letter-spacing="3.5" fill="#ffd000">TEAM SUDDA</text>
+    <text x="70" y="160" font-family="'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="64" font-weight="800" letter-spacing="-1.5" fill="#ffffff">Team Sudda</text>
+    <text x="72" y="204" font-family="'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="23" font-weight="400" fill="#d1d5db">Professional cleaning services for homes and workplaces.</text>
+    <rect x="72" y="238" width="219" height="34" rx="17" fill="#ffd000" stroke="#ffd000" stroke-opacity="1"/>
+  <text x="181.5" y="260.5" text-anchor="middle" font-family="'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#0b0b0b">Maintenance fallback</text>
+  <rect x="303" y="238" width="201" height="34" rx="17" fill="none" stroke="#ffd000" stroke-opacity="0.55"/>
+  <text x="403.5" y="260.5" text-anchor="middle" font-family="'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#e5e7eb">Cloudflare Workers</text>
+  <rect x="516" y="238" width="192" height="34" rx="17" fill="none" stroke="#ffd000" stroke-opacity="0.55"/>
+  <text x="612.0" y="260.5" text-anchor="middle" font-family="'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#e5e7eb">Zero dependencies</text>
+  </g>
+</svg>
