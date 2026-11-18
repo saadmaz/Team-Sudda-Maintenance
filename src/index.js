@@ -40,7 +40,10 @@ export default {
       url.hostname = target;
       url.protocol = "https:";
       url.port = "";
-      return new Response(null, { status: 301, headers: { Location: url.toString(), [HEADER]: "redirect" } });
+      return new Response(null, {
+        status: 301,
+        headers: { Location: url.toString(), [HEADER]: "redirect" },
+      });
     }
 
     const binding = SERVICE_HOSTS[host];
@@ -58,13 +61,19 @@ export default {
 
 async function passThrough(request, kind, send) {
   try {
-    const response = await send(new Request(request, { signal: AbortSignal.timeout(ORIGIN_TIMEOUT_MS) }));
-    if (DOWN_STATUSES.has(response.status)) return maintenance(request, `${kind}-${response.status}`);
+    const response = await send(
+      new Request(request, { signal: AbortSignal.timeout(ORIGIN_TIMEOUT_MS) }),
+    );
+    if (DOWN_STATUSES.has(response.status))
+      return maintenance(request, `${kind}-${response.status}`);
     const out = new Response(response.body, response);
     out.headers.set(HEADER, kind);
     return out;
   } catch (err) {
-    return maintenance(request, err?.name === "TimeoutError" ? `${kind}-timeout` : `${kind}-unreachable`);
+    return maintenance(
+      request,
+      err?.name === "TimeoutError" ? `${kind}-timeout` : `${kind}-unreachable`,
+    );
   }
 }
 
@@ -79,12 +88,16 @@ function maintenance(request, reason) {
   // API and asset requests get a small JSON body so apps can show their own message.
   const accept = request.headers.get("Accept") || "";
   const isRead = request.method === "GET" || request.method === "HEAD";
-  const wantsHtml = isRead && (accept.includes("text/html") || !accept.includes("application/json"));
+  const wantsHtml =
+    isRead && (accept.includes("text/html") || !accept.includes("application/json"));
   if (!wantsHtml) {
-    return new Response(JSON.stringify({ error: "maintenance", message: "This service is temporarily unavailable." }), {
-      status: 503,
-      headers: { ...headers, "Content-Type": "application/json; charset=utf-8" },
-    });
+    return new Response(
+      JSON.stringify({ error: "maintenance", message: "This service is temporarily unavailable." }),
+      {
+        status: 503,
+        headers: { ...headers, "Content-Type": "application/json; charset=utf-8" },
+      },
+    );
   }
 
   return new Response(request.method === "HEAD" ? null : PAGE, {
