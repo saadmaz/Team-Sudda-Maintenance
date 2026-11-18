@@ -20,7 +20,7 @@
 ---
 
 > [!IMPORTANT]
-> This is proprietary software. Access to the source code does not grant any right to use it.
+> This is proprietary software. Viewing the source code does not grant any right to use it.
 
 <table>
 <tr>

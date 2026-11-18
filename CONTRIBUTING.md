@@ -20,7 +20,7 @@
 ---
 
 > [!NOTE]
-> This repository is private and its source code is proprietary (see [LICENSE](LICENSE.md)). Code contributions are accepted from Team Sudda team members and invited collaborators only. Anyone is welcome to report a bug or suggest a change by opening an issue.
+> The source code is publicly visible, but it is proprietary (see [LICENSE](LICENSE.md)). Code contributions are accepted from Team Sudda team members and invited collaborators only. Anyone is welcome to report a bug or suggest a change by opening an issue.
 
 <details>
 <summary><strong>Contents</strong></summary>
